@@ -101,3 +101,7 @@ B
 hangfire_ubkie.sln,8\3\837ef056c2579c4939076ed9b6eab2de5ff85f05
 `
 0UBike.WebApplication/UBike.WebApplication.csproj,a\0\a09134156b46039484b895c978bb958fbc2b9c08
+‰
+YUBike.Hangfire/Infrastructure/HangfireMisc/HangfireFeatureApplicationBuilderExtensions.cs,f\5\f5cfd562a59e88d4c15132736d4e28c23aa41e89
+ˆ
+XUBike.Hangfire/Infrastructure/HangfireMisc/HangfireFeatureServiceCollectionExtensions.cs,e\0\e0b23280ac6b9c0e7fd5a72ba28fee910cd45838
