@@ -109,3 +109,11 @@ h
 8UBike.Hangfire/Infrastructure/HangfireMisc/YoubikeJob.cs,0\c\0c87f5814a7f932cd3505f7b7f58ebf4e1361d0f
 i
 9UBike.Hangfire/Infrastructure/HangfireMisc/IYoubikeJob.cs,b\0\b07244fa82643c8ef61ec94029399bb21588c4e6
+k
+;UBike.Hangfire/Infrastructure/HangfireMisc/IRecurringJob.cs,d\6\d6f938a7ed945e712b45a4825cd0525f6ac10182
+n
+>UBike.Hangfire/Infrastructure/HangfireMisc/JobConfiguration.cs,f\b\fbd59f830f431a8528e344abbbb74533058e628a
+n
+>UBike.Hangfire/Infrastructure/HangfireMisc/TestRecurringJob.cs,0\7\077a1d08a3c22966dc2dfff62d20504582ef3429
+q
+AUBike.Hangfire/Infrastructure/HangfireMisc/YoubikeRecurringJob.cs,8\9\898844017f76989797fc5b60125d0eda73666e51

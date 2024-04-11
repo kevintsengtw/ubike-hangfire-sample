@@ -38,7 +38,8 @@ builder.Services.AddScoped<IYoubikeRepository, YoubikeRepository>();
 builder.Services.AddScoped<IStationRepository, StationRepository>();
 
 // Hangfire Feature
-builder.Services.AddHangfireFeature();
+builder.Services.AddHangfireFeature()
+       .AddRecurringJob<YoubikeRecurringJob>();
 
 var app = builder.Build();
 
@@ -73,7 +74,7 @@ app.UseHangfireDashboard
     }
 );
 
-// Hangfire 系統啟動後的工作觸發點
-app.StartRecurringJobs();
+// 系統啟動後加入 Hangfire 排程
+app.AddRecurringJobs();
 
 app.Run();

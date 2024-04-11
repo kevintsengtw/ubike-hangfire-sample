@@ -1,3 +1,6 @@
+using Hangfire;
+using Hangfire.Storage;
+
 namespace UBike.Hangfire.Infrastructure.HangfireMisc;
 
 /// <summary>
@@ -6,22 +9,35 @@ namespace UBike.Hangfire.Infrastructure.HangfireMisc;
 public static class HangfireFeatureApplicationBuilderExtensions
 {
     /// <summary>
-    /// Starts the recurring jobs.
+    /// Add the recurring jobs.
     /// </summary>
     /// <param name="app">The app</param>
     /// <returns>The app</returns>
-    public static IApplicationBuilder StartRecurringJobs(this IApplicationBuilder app)
+    public static IApplicationBuilder AddRecurringJobs(this IApplicationBuilder app)
     {
         using var serviceScope = app.ApplicationServices.CreateScope();
-        
-        // DI 註冊的提供者
         var serviceProvider = serviceScope.ServiceProvider;
+        
+        // 清除已有的排程工作
+        using (var connection = JobStorage.Current.GetConnection())
+        {
+            foreach (var recurringJob in connection.GetRecurringJobs())
+            {
+                RecurringJob.RemoveIfExists(recurringJob.Id);
+            }
+        }
 
-        // 取得 IHangfireTrigger 的實體，透過替換 Interface 來選擇要哪個實體
-        var jobTrigger = serviceProvider.GetRequiredService<IHangfireJobTrigger>();
-
-        // 執行 HangfireTrigger 的 OnStart 動作，執行設定的排程
-        jobTrigger.OnStart();
+        var recurringJobs = serviceProvider.GetRequiredService<IEnumerable<IRecurringJob>>();
+        
+        // 加入排程工作
+        foreach (var recurringJob in recurringJobs)
+        {
+            RecurringJob.AddOrUpdate(
+                recurringJobId: recurringJob.JobId,
+                cronExpression: recurringJob.CronExpression,
+                options: recurringJob.RecurringJobOptions,
+                methodCall: () => recurringJob.ExecuteAsync());
+        }        
 
         return app;
     }

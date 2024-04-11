@@ -8,5 +8,5 @@ public interface IYoubikeJob
     /// <summary>
     /// 更新 YouBike 資料.
     /// </summary>
-    Task UpdateYoubikeDataAsync();
+    Task UpdateDataAsync();
 }

@@ -16,12 +16,8 @@ public static class HangfireFeatureServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The services</param>
     /// <returns>The services</returns>
-    public static IServiceCollection AddHangfireFeature(this IServiceCollection services)
+    public static JobConfiguration AddHangfireFeature(this IServiceCollection services)
     {
-        // HangfireJob, HangfireJobTrigger
-        services.AddScoped<IYoubikeJob, YoubikeJob>();
-        services.AddScoped<IHangfireJobTrigger, HangfireJobTrigger>();
-
         // Hangfire 的 SQL 連線字串設定
         services.AddHangfire((serviceProvider, config) =>
         {
@@ -52,6 +48,6 @@ public static class HangfireFeatureServiceCollectionExtensions
             options.WorkerCount = 10;
         });
         
-        return services;
+        return new JobConfiguration(services);
     }
 }
