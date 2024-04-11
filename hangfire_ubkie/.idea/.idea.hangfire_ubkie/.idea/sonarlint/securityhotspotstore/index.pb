@@ -105,3 +105,7 @@ B
 YUBike.Hangfire/Infrastructure/HangfireMisc/HangfireFeatureApplicationBuilderExtensions.cs,f\5\f5cfd562a59e88d4c15132736d4e28c23aa41e89
 ˆ
 XUBike.Hangfire/Infrastructure/HangfireMisc/HangfireFeatureServiceCollectionExtensions.cs,e\0\e0b23280ac6b9c0e7fd5a72ba28fee910cd45838
+h
+8UBike.Hangfire/Infrastructure/HangfireMisc/YoubikeJob.cs,0\c\0c87f5814a7f932cd3505f7b7f58ebf4e1361d0f
+i
+9UBike.Hangfire/Infrastructure/HangfireMisc/IYoubikeJob.cs,b\0\b07244fa82643c8ef61ec94029399bb21588c4e6
