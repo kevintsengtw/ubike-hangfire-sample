@@ -1,8 +1,5 @@
 using Hangfire;
 using Hangfire.Dashboard;
-using Hangfire.SqlServer;
-using Microsoft.Extensions.Options;
-using UBike.Common.Settings;
 using UBike.Hangfire.Infrastructure.HangfireMisc;
 using UBike.Hangfire.Infrastructure.ServiceCollectionExtensions;
 using UBike.Respository.Helpers;
@@ -61,6 +58,7 @@ app.Use(async (context, next) =>
         context.Response.Redirect("/hangfire");
         return;
     }
+
     await next();
 });
 

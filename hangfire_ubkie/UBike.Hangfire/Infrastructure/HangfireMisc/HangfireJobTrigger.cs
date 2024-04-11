@@ -1,4 +1,3 @@
-using System;
 using Hangfire;
 using Hangfire.Storage;
 
@@ -26,11 +25,13 @@ public class HangfireJobTrigger : IHangfireJobTrigger
 
         // 定時執行任務 (Recurring)
         // 週期重複的工作，每 5 分鐘抓取 Youbike 公開資料，並更新到資料庫裡
-        // https://crontab.guru
-        RecurringJob.AddOrUpdate<IHangfireJob>(
+        RecurringJob.AddOrUpdate<IYoubikeJob>(
             recurringJobId: "HangfireJob.UpdateYoubikeDataAsync",
-            methodCall: s => s.UpdateYoubikeDataAsync(null),
+            methodCall: s => s.UpdateYoubikeDataAsync(),
             cronExpression: "0/5 * * * *",
             options: new RecurringJobOptions { TimeZone = TimeZoneInfo.Local });
+        
+        // Cron Expression
+        // https://crontab.guru
     }
 }

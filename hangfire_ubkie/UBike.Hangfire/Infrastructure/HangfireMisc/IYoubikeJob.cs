@@ -1,15 +1,12 @@
-using System;
-using Hangfire.Server;
-
 namespace UBike.Hangfire.Infrastructure.HangfireMisc;
 
 /// <summary>
-/// interface IHangfireJob
+/// interface IYoubikeJob
 /// </summary>
-public interface IHangfireJob
+public interface IYoubikeJob
 {
     /// <summary>
     /// 更新 YouBike 資料.
     /// </summary>
-    Task UpdateYoubikeDataAsync(PerformContext context);
+    Task UpdateYoubikeDataAsync();
 }

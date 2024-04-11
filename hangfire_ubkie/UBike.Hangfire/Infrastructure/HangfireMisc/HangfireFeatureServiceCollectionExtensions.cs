@@ -19,7 +19,7 @@ public static class HangfireFeatureServiceCollectionExtensions
     public static IServiceCollection AddHangfireFeature(this IServiceCollection services)
     {
         // HangfireJob, HangfireJobTrigger
-        services.AddScoped<IHangfireJob, HangfireJob>();
+        services.AddScoped<IYoubikeJob, YoubikeJob>();
         services.AddScoped<IHangfireJobTrigger, HangfireJobTrigger>();
 
         // Hangfire 的 SQL 連線字串設定
