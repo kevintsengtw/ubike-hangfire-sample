@@ -1,6 +1,6 @@
-using UBike.Respository.Models;
+using UBike.Repository.Models;
 
-namespace UBike.Respository.Interface;
+namespace UBike.Repository.Interface;
 
 /// <summary>
 /// interface IYouBikeHttpClient

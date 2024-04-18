@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UBike.Respository.Models;
+namespace UBike.Repository.Models;
 
 /// <summary>
 /// class StationModel

@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Library", "1.Library", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBike.Common", "UBike.Common\UBike.Common.csproj", "{87C217BE-D76D-45EF-B8ED-145211A57851}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBike.Respository", "UBike.Respository\UBike.Respository.csproj", "{E1331D9C-C4BA-44ED-A9F8-42540E8509A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBike.Repository", "UBike.Repository\UBike.Repository.csproj", "{E1331D9C-C4BA-44ED-A9F8-42540E8509A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UBike.Service", "UBike.Service\UBike.Service.csproj", "{B0A7A8D6-88A6-464A-A065-0A701AF6D0B9}"
 EndProject

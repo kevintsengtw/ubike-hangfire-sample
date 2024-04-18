@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace UBike.Respository.Models;
+namespace UBike.Repository.Models;
 
 /// <summary>
 /// class YoubikeStationModel

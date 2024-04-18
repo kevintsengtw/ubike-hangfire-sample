@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 // ReSharper disable MethodOverloadWithOptionalParameter
 
-namespace UBike.Respository.Extensions
+namespace UBike.Repository.Extensions
 {
     /// <summary>
     /// Class StringExtensions.

@@ -1,11 +1,12 @@
 ﻿using Dapper;
 
-namespace UBike.Respository.Extensions;
+namespace UBike.Repository.Extensions;
 
 /// <summary>
 /// class DapperExtension.
 /// </summary>
 /// <remarks>
+/// 軟體主廚的程式料理廚房 - [料理佳餚] Dapper 用起來很友善，但是預設的參數型別對執行計劃不太友善。
 /// https://dotblogs.com.tw/supershowwei/2019/08/12/232213
 /// </remarks>
 public static class DapperExtension

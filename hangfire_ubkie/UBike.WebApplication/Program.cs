@@ -1,6 +1,6 @@
-using UBike.Respository.Helpers;
-using UBike.Respository.Implement;
-using UBike.Respository.Interface;
+using UBike.Repository.Helpers;
+using UBike.Repository.Implement;
+using UBike.Repository.Interface;
 using UBike.Service.Implement;
 using UBike.Service.Interface;
 using UBike.WebApplication.Infrastructure.ServiceCollectionExtensions;

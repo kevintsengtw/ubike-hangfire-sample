@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace UBike.Respository.Helpers;
+namespace UBike.Repository.Helpers;
 
 /// <summary>
 /// Interface IDatabaseHelper

@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using UBike.Common.Settings;
 
-namespace UBike.Respository.Helpers;
+namespace UBike.Repository.Helpers;
 
 /// <summary>
 /// Class DatabaseHelper.

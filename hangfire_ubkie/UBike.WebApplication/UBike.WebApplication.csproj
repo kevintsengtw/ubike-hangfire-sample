@@ -17,13 +17,13 @@
     <ItemGroup>
         <PackageReference Include="Mapster" Version="7.4.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\UBike.Common\UBike.Common.csproj" />
-      <ProjectReference Include="..\UBike.Respository\UBike.Respository.csproj" />
+      <ProjectReference Include="..\UBike.Repository\UBike.Repository.csproj" />
       <ProjectReference Include="..\UBike.Service\UBike.Service.csproj" />
     </ItemGroup>
 

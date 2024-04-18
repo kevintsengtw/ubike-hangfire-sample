@@ -1,6 +1,6 @@
 using System.Globalization;
 using Mapster;
-using UBike.Respository.Models;
+using UBike.Repository.Models;
 using UBike.Service.Dto;
 
 namespace UBike.Service.Mapping;

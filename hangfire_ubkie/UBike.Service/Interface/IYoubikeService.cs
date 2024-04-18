@@ -13,7 +13,7 @@ public interface IYoubikeService
     /// </summary>
     /// <param name="sourceData">The source data.</param>
     /// <returns></returns>
-    void UpdateData(IEnumerable<OriginalStationDto> sourceData);
+    Task UpdateDataAsync(IEnumerable<OriginalStationDto> sourceData);
 
     /// <summary>
     /// 取得所有的 YouBike 場站資料.
@@ -21,7 +21,7 @@ public interface IYoubikeService
     /// <param name="from">From.</param>
     /// <param name="size">The size.</param>
     /// <returns></returns>
-    IEnumerable<StationDto> GetAllStations(int from, int size);
+    Task<IEnumerable<StationDto>> GetAllStationsAsync(int from, int size);
 
     /// <summary>
     /// 取得指定區域、數量、範圍的 YouBike 場站資料.
@@ -30,5 +30,5 @@ public interface IYoubikeService
     /// <param name="from">From.</param>
     /// <param name="size">The size.</param>
     /// <returns></returns>
-    IEnumerable<StationDto> GetStations(string area, int from, int size);
+    Task<IEnumerable<StationDto>> GetStationsAsync(string area, int from, int size);
 }

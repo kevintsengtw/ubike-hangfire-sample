@@ -1,6 +1,6 @@
 ﻿using System;
 using MapsterMapper;
-using UBike.Respository.Interface;
+using UBike.Repository.Interface;
 using UBike.Service.Dto;
 using UBike.Service.Interface;
 

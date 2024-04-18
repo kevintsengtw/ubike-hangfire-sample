@@ -33,11 +33,11 @@ public class HomeController : ControllerBase
     /// <param name="size">The size.</param>
     /// <returns></returns>
     [HttpGet("all")]
-    public IActionResult GetAll([FromQuery] int from, [FromQuery] int size)
+    public async Task<IActionResult> GetAllAsync([FromQuery] int from, [FromQuery] int size)
     {
         // api/all.GET
 
-        var youbikes = this._youbikeService.GetAllStations(from, size);
+        var youbikes = await this._youbikeService.GetAllStationsAsync(from, size);
         return this.Ok(youbikes);
     }
 
@@ -49,11 +49,11 @@ public class HomeController : ControllerBase
     /// <param name="size">The size.</param>
     /// <returns></returns>
     [HttpGet("area")]
-    public IActionResult GetByArea([FromQuery] string area, [FromQuery] int from, [FromQuery] int size)
+    public async Task<IActionResult> GetByAreaAsync([FromQuery] string area, [FromQuery] int from, [FromQuery] int size)
     {
         // api/area.GET
 
-        var youbikes = this._youbikeService.GetStations(area, from, size);
+        var youbikes = await this._youbikeService.GetStationsAsync(area, from, size);
         return this.Ok(youbikes);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using UBike.Respository.Interface;
-using UBike.Respository.Models;
+using UBike.Repository.Interface;
+using UBike.Repository.Models;
 
-namespace UBike.Respository.Implement;
+namespace UBike.Repository.Implement;
 
 /// <summary>
 /// class YoubikeRepository

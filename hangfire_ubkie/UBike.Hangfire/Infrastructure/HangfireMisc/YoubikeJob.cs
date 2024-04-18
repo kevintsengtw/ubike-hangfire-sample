@@ -33,6 +33,6 @@ public class YoubikeJob : IYoubikeJob
         var sourceData = await this._youbikeOpenDataService.GetSourceDataAsync();
 
         // 儲存至資料庫
-        this._youbikeService.UpdateData(sourceData);
+        await this._youbikeService.UpdateDataAsync(sourceData);
     }
 }

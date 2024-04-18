@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Throw;
-using UBike.Respository.Interface;
-using UBike.Respository.Models;
+using UBike.Repository.Interface;
+using UBike.Repository.Models;
 using UBike.Service.Dto;
 using UBike.Service.Interface;
 
@@ -35,7 +35,7 @@ public class YoubikeService : IYoubikeService
     /// </summary>
     /// <param name="sourceData">The source data.</param>
     /// <returns></returns>
-    public void UpdateData(IEnumerable<OriginalStationDto> sourceData)
+    public async Task UpdateDataAsync(IEnumerable<OriginalStationDto> sourceData)
     {
         if (sourceData is null || !sourceData.Any())
         {
@@ -46,10 +46,10 @@ public class YoubikeService : IYoubikeService
 
         // 整批刪除
         var stationNumbers = stationModels.Select(x => x.StationNo);
-        this._stationRepository.BulkDelete(stationNumbers);
+        await this._stationRepository.BulkDeleteAsync(stationNumbers);
 
         // 整批新增
-        this._stationRepository.BulkInsert(stationModels);
+        await this._stationRepository.BulkInsertAsync(stationModels);
     }
 
     /// <summary>
@@ -58,18 +58,18 @@ public class YoubikeService : IYoubikeService
     /// <param name="from">From.</param>
     /// <param name="size">The size.</param>
     /// <returns></returns>
-    public IEnumerable<StationDto> GetAllStations(int from, int size)
+    public async Task<IEnumerable<StationDto>> GetAllStationsAsync(int from, int size)
     {
         from.Throw().IfLessThanOrEqualTo(0);
         size.Throw().IfLessThanOrEqualTo(0);
 
-        var stationAmount = this._stationRepository.GetTotalCount();
+        var stationAmount = await this._stationRepository.GetTotalCountAsync();
         if (stationAmount == 0)
         {
             return Enumerable.Empty<StationDto>();
         }
 
-        var stationModels = this._stationRepository.GetRange(from, size);
+        var stationModels = await this._stationRepository.GetRangeAsync(from, size);
 
         var stations = this._mapper.Map<IEnumerable<StationDto>>(stationModels);
         return stations;
@@ -82,19 +82,19 @@ public class YoubikeService : IYoubikeService
     /// <param name="from">From.</param>
     /// <param name="size">The size.</param>
     /// <returns></returns>
-    public IEnumerable<StationDto> GetStations(string area, int from, int size)
+    public async Task<IEnumerable<StationDto>> GetStationsAsync(string area, int from, int size)
     {
         area.Throw().IfNullOrWhiteSpace(x => x);
         from.Throw().IfLessThanOrEqualTo(0);
         size.Throw().IfLessThanOrEqualTo(0);
 
-        var amount = this._stationRepository.GetCountByArea(area);
+        var amount = await this._stationRepository.GetCountByAreaAsync(area);
         if (amount == 0)
         {
             return Enumerable.Empty<StationDto>();
         }
 
-        var stationModels = this._stationRepository.QueryByArea(area, from, size);
+        var stationModels = await this._stationRepository.QueryByAreaAsync(area, from, size);
 
         var stations = this._mapper.Map<IEnumerable<StationDto>>(stationModels);
         return stations;

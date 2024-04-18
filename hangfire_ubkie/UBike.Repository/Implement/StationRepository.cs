@@ -1,14 +1,14 @@
 using Dapper;
 using Throw;
 using UBike.Common.Misc;
-using UBike.Respository.Extensions;
-using UBike.Respository.Helpers;
-using UBike.Respository.Interface;
-using UBike.Respository.Models;
+using UBike.Repository.Extensions;
+using UBike.Repository.Helpers;
+using UBike.Repository.Interface;
+using UBike.Repository.Models;
 
 // ReSharper disable PossibleMultipleEnumeration
 
-namespace UBike.Respository.Implement;
+namespace UBike.Repository.Implement;
 
 /// <summary>
 /// class StationRepository
@@ -34,7 +34,7 @@ public class StationRepository : IStationRepository
     /// <returns>
     ///   <c>true</c> if the specified station no is exists; otherwise, <c>false</c>.
     /// </returns>
-    public bool IsExists(string stationNo)
+    public async Task<bool> IsExistsAsync(string stationNo)
     {
         stationNo.Throw().IfNullOrWhiteSpace(x => x);
 
@@ -53,7 +53,7 @@ public class StationRepository : IStationRepository
         var parameters = new DynamicParameters();
         parameters.Add("StationNo", stationNo);
 
-        var query = conn.QueryFirstOrDefault<int>(sql: sqlCommand, param: parameters);
+        var query = await conn.QueryFirstOrDefaultAsync<int>(sql: sqlCommand, param: parameters);
 
         var result = query > 0;
         return result;
@@ -65,7 +65,7 @@ public class StationRepository : IStationRepository
     /// <param name="stationNo">場站代號</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException">stationNo</exception>
-    public StationModel Get(string stationNo)
+    public async Task<StationModel> GetAsync(string stationNo)
     {
         stationNo.Throw().IfNullOrWhiteSpace(x => x);
 
@@ -95,7 +95,7 @@ public class StationRepository : IStationRepository
         var parameters = new DynamicParameters();
         parameters.Add("StationNo", stationNo.Truncate(10).ToNVarchar());
 
-        var query = conn.QueryFirstOrDefault<StationModel>(sql: sqlCommand, param: parameters);
+        var query = await conn.QueryFirstOrDefaultAsync<StationModel>(sql: sqlCommand, param: parameters);
 
         return query;
     }
@@ -106,7 +106,7 @@ public class StationRepository : IStationRepository
     /// <param name="from">from</param>
     /// <param name="size">size</param>
     /// <returns></returns>
-    public IEnumerable<StationModel> GetRange(int from, int size)
+    public async Task<IEnumerable<StationModel>> GetRangeAsync(int from, int size)
     {
         from.Throw().IfLessThanOrEqualTo(0);
         size.Throw().IfLessThanOrEqualTo(0);
@@ -143,7 +143,7 @@ public class StationRepository : IStationRepository
         parameters.Add("OFFSET", start - 1);
         parameters.Add("FETCH", pageSize);
 
-        var query = conn.Query<StationModel>(sql: sqlCommand, param: parameters);
+        var query = await conn.QueryAsync<StationModel>(sql: sqlCommand, param: parameters);
 
         var models = query.Any() ? query.ToList() : Enumerable.Empty<StationModel>();
         return models;
@@ -153,12 +153,12 @@ public class StationRepository : IStationRepository
     /// 取得全部 station 資料數量.
     /// </summary>
     /// <returns></returns>
-    public int GetTotalCount()
+    public async Task<int> GetTotalCountAsync()
     {
         const string sqlCommand = " SELECT count(p.Id) FROM [YoubikeStation] p WITH (NOLOCK) ";
 
         using var conn = this._databaseHelper.GetConnection();
-        var queryResult = conn.QueryFirstOrDefault<int>(sql: sqlCommand);
+        var queryResult = await conn.QueryFirstOrDefaultAsync<int>(sql: sqlCommand);
         return queryResult;
     }
 
@@ -168,7 +168,7 @@ public class StationRepository : IStationRepository
     /// <param name="model">Station</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException">model</exception>
-    public IResult Insert(StationModel model)
+    public async Task<IResult> InsertAsync(StationModel model)
     {
         model.ThrowIfNull();
 
@@ -230,7 +230,7 @@ public class StationRepository : IStationRepository
         parameters.Add("BikeEmpty", model.BikeEmpty);
         parameters.Add("Active", model.Active);
 
-        var executeResult = conn.Execute(sql: sqlCommand, param: parameters);
+        var executeResult = await conn.ExecuteAsync(sql: sqlCommand, param: parameters);
 
         IResult result = new Result(false);
 
@@ -252,7 +252,7 @@ public class StationRepository : IStationRepository
     /// </summary>
     /// <param name="models">The models.</param>
     /// <returns></returns>
-    public IResult BulkInsert(IEnumerable<StationModel> models)
+    public async Task<IResult> BulkInsertAsync(IEnumerable<StationModel> models)
     {
         models.ThrowIfNull().IfEmpty();
 
@@ -323,7 +323,7 @@ public class StationRepository : IStationRepository
         conn.Open();
         using var trans = conn.BeginTransaction();
 
-        var executeResult = conn.Execute(sql: sqlCommand, param: parametersCollection, transaction: trans);
+        var executeResult = await conn.ExecuteAsync(sql: sqlCommand, param: parametersCollection, transaction: trans);
 
         IResult result = new Result(false);
 
@@ -347,11 +347,11 @@ public class StationRepository : IStationRepository
     /// </summary>
     /// <param name="stationNo">The stationNo.</param>
     /// <returns></returns>
-    public IResult Delete(string stationNo)
+    public async Task<IResult> DeleteAsync(string stationNo)
     {
         stationNo.Throw().IfNullOrWhiteSpace(x => x);
 
-        var exists = this.IsExists(stationNo);
+        var exists = await this.IsExistsAsync(stationNo);
         if (!exists)
         {
             return new Result(false) { Message = "資料不存在" };
@@ -369,7 +369,7 @@ public class StationRepository : IStationRepository
 
         using var conn = this._databaseHelper.GetConnection();
 
-        var executeResult = conn.Execute(sql: sqlCommand, param: parameters);
+        var executeResult = await conn.ExecuteAsync(sql: sqlCommand, param: parameters);
 
         IResult result = new Result(false);
 
@@ -389,7 +389,7 @@ public class StationRepository : IStationRepository
     /// </summary>
     /// <param name="stationNumbers">The stationNumbers.</param>
     /// <returns></returns>
-    public IResult BulkDelete(IEnumerable<string> stationNumbers)
+    public async Task<IResult> BulkDeleteAsync(IEnumerable<string> stationNumbers)
     {
         stationNumbers.ThrowIfNull().IfEmpty();
 
@@ -398,16 +398,12 @@ public class StationRepository : IStationRepository
                                   WHERE StationNo = @StationNo
                                   """;
 
+        var existingStationNumbers = await this.FilterExistingStationNumbersAsync(stationNumbers);
+        
         var parametersCollection = new List<DynamicParameters>();
 
-        foreach (var stationNo in stationNumbers)
+        foreach (var stationNo in existingStationNumbers)
         {
-            var exists = this.IsExists(stationNo);
-            if (!exists)
-            {
-                continue;
-            }
-
             var parameters = new DynamicParameters();
             parameters.Add("StationNo", stationNo);
             parametersCollection.Add(parameters);
@@ -417,7 +413,7 @@ public class StationRepository : IStationRepository
         conn.Open();
         using var trans = conn.BeginTransaction();
 
-        var executeResult = conn.Execute(sql: sqlCommand, param: parametersCollection, transaction: trans);
+        var executeResult = await conn.ExecuteAsync(sql: sqlCommand, param: parametersCollection, transaction: trans);
 
         IResult result = new Result(false);
 
@@ -437,13 +433,31 @@ public class StationRepository : IStationRepository
     }
 
     /// <summary>
+    /// 過濾出存在的站點
+    /// </summary>
+    /// <param name="stationNumbers">stationNumbers</param>
+    /// <returns></returns>
+    private async Task<HashSet<string>> FilterExistingStationNumbersAsync(IEnumerable<string> stationNumbers)
+    {
+        const string query = """
+                             SELECT StationNo
+                             FROM [dbo].[YoubikeStation]
+                             WHERE StationNo IN @StationNumbers
+                             """;
+
+        using var conn = this._databaseHelper.GetConnection();
+        var existingStationNumbers = await conn.QueryAsync<string>(query, new { StationNumbers = stationNumbers });
+        return existingStationNumbers.ToHashSet();
+    }
+
+    /// <summary>
     /// 以 area 查詢並取得 staion 資料.
     /// </summary>
     /// <param name="area">The area.</param>
     /// <param name="from">From.</param>
     /// <param name="size">The size.</param>
     /// <returns></returns>
-    public IEnumerable<StationModel> QueryByArea(string area, int @from, int size)
+    public async Task<IEnumerable<StationModel>> QueryByAreaAsync(string area, int @from, int size)
     {
         area.Throw().IfNullOrWhiteSpace(x => x);
         from.Throw().IfLessThanOrEqualTo(0);
@@ -482,7 +496,7 @@ public class StationRepository : IStationRepository
         parameters.Add("FETCH", pageSize);
 
         using var conn = this._databaseHelper.GetConnection();
-        var query = conn.Query<StationModel>(sql: sqlCommand, param: parameters);
+        var query = await conn.QueryAsync<StationModel>(sql: sqlCommand, param: parameters);
         var models = query.Any() ? query.ToList() : Enumerable.Empty<StationModel>();
         return models;
     }
@@ -492,7 +506,7 @@ public class StationRepository : IStationRepository
     /// </summary>
     /// <param name="area">The area.</param>
     /// <returns></returns>
-    public int GetCountByArea(string area)
+    public async Task<int> GetCountByAreaAsync(string area)
     {
         area.Throw().IfNullOrWhiteSpace(x => x);
 
@@ -505,7 +519,7 @@ public class StationRepository : IStationRepository
         parameters.Add("StationArea", area.Truncate(10).ToNVarchar());
 
         using var conn = this._databaseHelper.GetConnection();
-        var queryResult = conn.QueryFirstOrDefault<int>(sql: sqlCommand, param: parameters);
+        var queryResult = await conn.QueryFirstOrDefaultAsync<int>(sql: sqlCommand, param: parameters);
         return queryResult;
     }
 }

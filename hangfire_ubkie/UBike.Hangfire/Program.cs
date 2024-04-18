@@ -1,10 +1,12 @@
 using Hangfire;
 using Hangfire.Dashboard;
+using Polly;
+using Polly.Extensions.Http;
 using UBike.Hangfire.Infrastructure.HangfireMisc;
 using UBike.Hangfire.Infrastructure.ServiceCollectionExtensions;
-using UBike.Respository.Helpers;
-using UBike.Respository.Implement;
-using UBike.Respository.Interface;
+using UBike.Repository.Helpers;
+using UBike.Repository.Implement;
+using UBike.Repository.Interface;
 using UBike.Service.Implement;
 using UBike.Service.Interface;
 
@@ -15,9 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// HttpRequestException, 5XX (server errors) and 408 (RequestTimeout) are considered transient network failures
+var retryPolicy = HttpPolicyExtensions.HandleTransientHttpError()
+                                      .WaitAndRetryAsync(new[]
+                                      {
+                                          TimeSpan.FromSeconds(1),
+                                          TimeSpan.FromSeconds(5),
+                                          TimeSpan.FromSeconds(10)
+                                      });
+
 // HttpClientFactory
-builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<IYouBikeHttpClient, YouBikeHttpClient>();
+builder.Services.AddHttpClient<IYouBikeHttpClient, YouBikeHttpClient>()
+       .AddPolicyHandler(retryPolicy);
 
 // DatabaseConnectionOptions
 builder.Services.AddDatabaseConnectionOptions();

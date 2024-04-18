@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\UBike.Respository\UBike.Respository.csproj" />
+      <ProjectReference Include="..\UBike.Repository\UBike.Repository.csproj" />
     </ItemGroup>
 
     <ItemGroup>

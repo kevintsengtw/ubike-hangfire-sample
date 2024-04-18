@@ -1,10 +1,10 @@
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using UBike.Common.Settings;
-using UBike.Respository.Interface;
-using UBike.Respository.Models;
+using UBike.Repository.Interface;
+using UBike.Repository.Models;
 
-namespace UBike.Respository.Implement;
+namespace UBike.Repository.Implement;
 
 /// <summary>
 /// class YouBikeHttpClient
